@@ -29,17 +29,17 @@ class Category
      */
     private $articles;
 
-    public function getId(): ?int
+    public function getId() : ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName() : ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name) : self
     {
         $this->name = $name;
 
@@ -59,7 +59,7 @@ class Category
         return $this->articles;
     }
 
-    public function addArticle(Article $article): self
+    public function addArticle(Article $article) : self
     {
         if (!$this->articles->contains($article)) {
             $this->articles[] = $article;
@@ -69,11 +69,11 @@ class Category
         return $this;
     }
 
-    public function removeArticle(Article $article): self
+    public function removeArticle(Article $article) : self
     {
         if ($this->articles->contains($article)) {
             $this->articles->removeElement($article);
-            // set the owning side to null (unless already changed)
+            // set the owning side to null (unless already changed)//
             if ($article->getCategory() === $this) {
                 $article->setCategory(null);
             }

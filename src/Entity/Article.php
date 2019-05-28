@@ -32,17 +32,17 @@ class Article
      */
     private $category;
 
-    public function getId(): ?int
+    public function getId() : ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle() : ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(string $title) : self
     {
         $this->title = $title;
 
@@ -54,22 +54,23 @@ class Article
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(string $content) : self
     {
         $this->content = $content;
 
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function getCategory() : ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self
+    public function setCategory(?Category $category) : self
     {
         $this->category = $category;
 
         return $this;
     }
 }
+
