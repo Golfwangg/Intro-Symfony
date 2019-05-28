@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Article;
 use App\Entity\Category;
 
@@ -75,14 +77,14 @@ class BlogController extends AbstractController
     }
 
    /**
-    * @Route("/category/{categoryName}",
+    * @Route("/category/{name}",
     *     defaults={"category" = null},
     *      name="show_category")
     * @return Response A response instance
     */
-    public function showByCategory(string $categoryName): Response
+    public function showByCategory(Category $categoryName): Response
     {
-        if (!$categoryName) {
+        /*if (!$categoryName) {
             throw $this
                 ->createNotFoundException('No slug has been sent to find an article in article\'s table.');
         }
@@ -98,17 +100,17 @@ class BlogController extends AbstractController
 
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
-            ->findBy(['category' => $category], ['id' => 'DESC'], 3);
+            ->findBy(['category' => $categoryName], ['id' => 'DESC'], 3);
 
         if (!$category) {
             throw $this->createNotFoundException(
                 'No article with '.$categoryName.' title, found in article\'s table.'
             );
-        }
+        }*/
 
         return $this->render('blog/category.html.twig', [
-                'categoryName' => $categoryName,
-                'articles' => $articles,
+                'category' => $categoryName,
+                'articles' => $categoryName->getArticles(),
         ]);
     }
 }
