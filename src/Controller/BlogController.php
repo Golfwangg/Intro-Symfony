@@ -80,35 +80,35 @@ class BlogController extends AbstractController
     *      name="show_category")
     * @return Response A response instance
     */
-    public function showByCategory(Category $categoryName): Response
+    public function showByCategory(Category $category): Response
     {
-        /*if (!$categoryName) {
+        /*if (!$category) {
             throw $this
                 ->createNotFoundException('No slug has been sent to find an article in article\'s table.');
         }
 
-        $categoryName = preg_replace(
+        $category = preg_replace(
             '/-/',
-            ' ', ucwords(trim(strip_tags($categoryName)), "-")
+            ' ', ucwords(trim(strip_tags($category)), "-")
         );
 
         $category = $this->getDoctrine()
             ->getRepository(Category::class)
-            ->findOneBy(['name'=> $categoryName]);
+            ->findOneBy(['name'=> $category]);
 
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
-            ->findBy(['category' => $categoryName], ['id' => 'DESC'], 3);
+            ->findBy(['category' => $category], ['id' => 'DESC'], 3);
 
         if (!$category) {
             throw $this->createNotFoundException(
-                'No article with '.$categoryName.' title, found in article\'s table.'
+                'No articles with '.$category.' title, found in article\'s table.'
             );
         }*/
 
         return $this->render('blog/category.html.twig', [
-                'category' => $categoryName,
-                'articles' => $categoryName->getArticles(),
+                'category' => $category,
+                'articles' => $category->getArticles(),
         ]);
     }
 }
