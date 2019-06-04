@@ -82,7 +82,7 @@ class BlogController extends AbstractController
      */
     public function showByCategory(Category $category): Response
     {
-        if (!$category) {
+        /*if (!$category) {
             throw $this
                 ->createNotFoundException('No slug has been sent to find an article in article\'s table.');
         }
@@ -104,7 +104,7 @@ class BlogController extends AbstractController
             throw $this->createNotFoundException(
                 'No articles with ' . $category . ' title, found in article\'s table.'
             );
-        }
+        }*/
 
         return $this->render('blog/category.html.twig', [
             'category' => $category,
