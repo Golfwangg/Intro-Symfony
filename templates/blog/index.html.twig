@@ -3,6 +3,10 @@
 {% block title %}All articles{% endblock %}
 
 {% block body %}
+    {{ form_start(form) }}
+        {{ form_row(form) }}
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
     <h1>All articles from article s table : </h1>
     {% for article in articles %}
         <div>
@@ -12,7 +16,5 @@
     {% else %}
         Aucun article trouvé.
     {% endfor %}
-    <a href="{{ path('app_index') }}">
-        Back to homepage.
-    </a>
+    <a href="{{ path('app_index') }}">Back to homepage.</a>
 {% endblock %}

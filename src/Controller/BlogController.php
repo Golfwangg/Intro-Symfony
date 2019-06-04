@@ -32,19 +32,18 @@ class BlogController extends AbstractController
         }
 
         return $this->render('blog/index.html.twig', [
-            'articles' => $articles
+            'articles' => $articles,
         ]);
     }
 
     /**
      * Getting a article with a formatted slug for title
      *
-     * @param string $slug The slugger
-     *
      * @Route("/show/{slug<^[a-z0-9-]+$>}",
      *     defaults={"slug" = null},
      *     name="blog_show")
-     *  @return Response A response instance
+     * @param string $slug The slugger
+     * @return Response A response instance
      */
     public function show(?string $slug): Response
     {
@@ -64,7 +63,7 @@ class BlogController extends AbstractController
 
         if (!$article) {
             throw $this->createNotFoundException(
-                'No article with '.$slug.' title, found in article\'s table.'
+                'No article with ' . $slug . ' title, found in article\'s table.'
             );
         }
 
@@ -74,15 +73,16 @@ class BlogController extends AbstractController
         ]);
     }
 
-   /**
-    * @Route("/category/{name}",
-    *     defaults={"category" = null},
-    *      name="show_category")
-    * @return Response A response instance
-    */
+    /**
+     * @Route("/category/{name}",
+     *     defaults={"category" = null},
+     *      name="show_category")
+     * @param Category $category
+     * @return Response A response instance
+     */
     public function showByCategory(Category $category): Response
     {
-        /*if (!$category) {
+        if (!$category) {
             throw $this
                 ->createNotFoundException('No slug has been sent to find an article in article\'s table.');
         }
@@ -93,8 +93,8 @@ class BlogController extends AbstractController
         );
 
         $category = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findOneBy(['name'=> $category]);
+            ->getRepository(CategoryController::class)
+            ->findOneBy(['name' => $category]);
 
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
@@ -102,13 +102,13 @@ class BlogController extends AbstractController
 
         if (!$category) {
             throw $this->createNotFoundException(
-                'No articles with '.$category.' title, found in article\'s table.'
+                'No articles with ' . $category . ' title, found in article\'s table.'
             );
-        }*/
+        }
 
         return $this->render('blog/category.html.twig', [
-                'category' => $category,
-                'articles' => $category->getArticles(),
+            'category' => $category,
+            'articles' => $category->getArticles(),
         ]);
     }
 }
