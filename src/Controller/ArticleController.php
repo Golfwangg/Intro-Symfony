@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use App\Service\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,9 +31,10 @@ class ArticleController extends AbstractController
     /**
      * @Route("/new", name="article_new", methods={"GET","POST"})
      * @param Request $request
+     * @param Slugify $slugify
      * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Slugify $slugify): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
@@ -40,6 +42,7 @@ class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $article->setSlug($slugify->generate($article->getTitle()));
             $entityManager->persist($article);
             $entityManager->flush();
 
@@ -53,8 +56,9 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="article_show", methods={"GET"})
+     * @Route("/{slug}", name="article_show", methods={"GET"})
      * @param Article $article
+     * @param Slugify $slugify
      * @return Response
      */
     public function show(Article $article): Response
@@ -65,7 +69,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="article_edit", methods={"GET","POST"})
+     * @Route("/{slug}/edit", name="article_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Article $article
      * @return Response
@@ -79,7 +83,7 @@ class ArticleController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('article_index', [
-                'id' => $article->getId(),
+                'slug' => $article->getSlug(),
             ]);
         }
 
@@ -90,7 +94,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="article_delete", methods={"DELETE"})
+     * @Route("/{slug}", name="article_delete", methods={"DELETE"})
      * @param Request $request
      * @param Article $article
      * @return Response

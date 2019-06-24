@@ -39,22 +39,27 @@ class Article
      */
     private $tags;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
     }
 
-    public function getId() : ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle() : ?string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title) : self
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
@@ -66,19 +71,19 @@ class Article
         return $this->content;
     }
 
-    public function setContent(string $content) : self
+    public function setContent(string $content): self
     {
         $this->content = $content;
 
         return $this;
     }
 
-    public function getCategory() : ?Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category) : self
+    public function setCategory(?Category $category): self
     {
         $this->category = $category;
 
@@ -112,5 +117,16 @@ class Article
 
         return $this;
     }
-}
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+}
